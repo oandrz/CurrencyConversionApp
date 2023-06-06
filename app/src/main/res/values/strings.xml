@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Test Project</string>
+    <string name="toolbar_title">Currency Converter</string>
+    <string name="failed_fetching">Failed fetching</string>
+    <string name="base_currency">Base Currency</string>
+    <string name="amount">Amount</string>
+</resources>
