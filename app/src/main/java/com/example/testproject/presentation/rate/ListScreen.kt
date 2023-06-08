@@ -1,5 +1,6 @@
 package com.example.testproject.presentation.rate
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,7 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Card
@@ -66,7 +67,7 @@ fun ListScreen(
                 when (uiState) {
                     is ListUIState.Success -> SuccessContent(
                         state = uiState as ListUIState.Success,
-                        onAmountChanged = vm::onAmountChange
+                        onActionInvoked = vm::onActionInvoked
                     )
                     is ListUIState.Failed -> FailedContent()
                     is ListUIState.Loading -> LoadingContent()
@@ -78,7 +79,11 @@ fun ListScreen(
 }
 
 @Composable
-fun SuccessContent(modifier: Modifier = Modifier, state: ListUIState.Success, onAmountChanged: ((String) -> Unit)? = null) {
+fun SuccessContent(
+    modifier: Modifier = Modifier,
+    state: ListUIState.Success,
+    onActionInvoked: ((ListViewModel.ListUIAction) -> Unit)? = null,
+) {
     Column {
         CurrencyHeader(
             modifier = modifier
@@ -87,9 +92,16 @@ fun SuccessContent(modifier: Modifier = Modifier, state: ListUIState.Success, on
             currency = state.baseRate.currency.currencySymbol,
             currencyDetail = state.baseRate.currency.currencySymbolDetail,
             amount = state.baseRate.amount.toDecimal(),
-            onAmountChanged = onAmountChanged
+            onAmountChanged = {
+                onActionInvoked?.invoke(ListViewModel.ListUIAction.OnAmountChanged(it))
+            }
         )
-        RateList(rates = state.rates,)
+        RateList(
+            rates = state.rates,
+            onItemClicked = {
+                onActionInvoked?.invoke(ListViewModel.ListUIAction.onBaseCurrencyChanged(it))
+            }
+        )
     }
 }
 
@@ -184,14 +196,19 @@ fun CurrencyHeader(
 @Composable
 fun RateList(
     modifier: Modifier = Modifier,
-    rates: List<RateCurrencyUIContent>
+    rates: List<RateCurrencyUIContent>,
+    onItemClicked: ((RateCurrencyUIContent) -> Unit)? = null
 ) = LazyColumn(modifier = modifier) {
-    items(items = rates) { data ->
+    itemsIndexed(items = rates) { index, data ->
         Spacer(modifier = Modifier.size(16.dp))
         RateItem(
+            position = index,
             currency = data.currencySymbol,
             currencyDetail = data.currencySymbolDetail,
-            rate = data.price.toDecimal()
+            rate = data.price.toDecimal(),
+            onItemClicked = {
+                onItemClicked?.invoke(rates[it])
+            }
         )
     }
 }
@@ -199,14 +216,20 @@ fun RateList(
 @Composable
 fun RateItem(
     modifier: Modifier = Modifier,
+    position: Int,
     currency: String,
     currencyDetail: String,
-    rate: String
+    rate: String,
+    onItemClicked: ((Int) -> Unit)? = null
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = 16.dp)
+            .clickable {
+               onItemClicked?.invoke(position)
+            }
+        ,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(modifier = Modifier.fillMaxWidth(0.7f)) {

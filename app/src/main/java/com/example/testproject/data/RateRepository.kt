@@ -8,15 +8,15 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 interface RateRepository {
-    fun getLatestRates(): Flow<LatestRate>
+    fun getLatestRates(baseCurrency: String?): Flow<LatestRate>
 }
 
 class RateRepositoryImpl @Inject constructor(
     private val rateRemoteDataSource: RateRemoteDataSource
 ) : RateRepository {
 
-    override fun getLatestRates() =
-        rateRemoteDataSource.getLatestRate().map {
+    override fun getLatestRates(baseCurrency: String?) =
+        rateRemoteDataSource.getLatestRate(baseCurrency).map {
             LatestRate(
                 CurrencyRate(rate = 1.0, it.baseCurrency),
                 it.rates.map { (currency, rate) ->

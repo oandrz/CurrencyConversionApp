@@ -9,5 +9,6 @@ import kotlinx.coroutines.flow.Flow
 class GetLatestRateUseCase @Inject constructor(
     private val rateRepository: RateRepository
 ) {
-    operator fun invoke(): Flow<Result<LatestRate>> = rateRepository.getLatestRates().toResult()
+    operator fun invoke(baseCurrency: String? = null): Flow<Result<LatestRate>> =
+        rateRepository.getLatestRates(baseCurrency).toResult()
 }

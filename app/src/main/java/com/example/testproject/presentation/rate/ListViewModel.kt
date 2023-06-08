@@ -4,11 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.testproject.domain.GetCurrenciesUseCase
 import com.example.testproject.domain.GetLatestRateUseCase
-import com.example.testproject.domain.model.CurrencyRate
 import com.example.testproject.domain.model.LatestRate
+import com.example.testproject.ext.convertTo
 import com.example.testproject.presentation.rate.model.BaseRateCurrencyUIContent
 import com.example.testproject.presentation.rate.model.RateCurrencyUIContent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.math.BigDecimal
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -16,9 +17,9 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -33,8 +34,11 @@ class ListViewModel @Inject constructor(
 
     private var cachedCurrentRate: LatestRate? = null
 
-    private val _baseCurrencyAmount: MutableStateFlow<Double> = MutableStateFlow(1.0)
-    private val baseCurrencyAmount: Flow<Double> = _baseCurrencyAmount
+    private val _baseCurrencyAmount: MutableStateFlow<BigDecimal> = MutableStateFlow(1.0.toBigDecimal())
+    private val baseCurrencyAmount: Flow<BigDecimal> = _baseCurrencyAmount
+
+    private val _baseCurrency: MutableSharedFlow<RateCurrencyUIContent> = MutableSharedFlow()
+    private val baseCurrency: Flow<RateCurrencyUIContent> =_baseCurrency
 
     private val _currencySymbolDictionary: MutableStateFlow<Map<String, String>> = MutableStateFlow(emptyMap())
     private val currencySymbolDictionary: Flow<Map<String, String>> = _currencySymbolDictionary
@@ -44,33 +48,34 @@ class ListViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _baseCurrencyAmount.onStart { emit(1.0) }
-            combine(baseCurrencyAmount, currencySymbolDictionary, rate) { amount, currencyDict, latestRate ->
+            combine(
+                baseCurrency,
+                baseCurrencyAmount,
+                currencySymbolDictionary,
+                rate
+            ) { baseCurrency, amount, currencyDict, latestRate ->
                 if (cachedCurrentRate == null) {
                     cachedCurrentRate = latestRate
                 }
                 val rateList = cachedCurrentRate?.rates
-                    ?.filter { it.currency != cachedCurrentRate?.baseRate?.currency }
+                    ?.filter { it.currency != baseCurrency.currencySymbol }
                     ?.map {
                         RateCurrencyUIContent(
                             currencySymbol = it.currency,
                             currencySymbolDetail = currencyDict[it.currency].orEmpty(),
-                            price = it.rate * amount
+                            price = baseCurrency.currencySymbol.convertTo(amount, it.currency, cachedCurrentRate?.rates ?: emptyList())
                         )
                     }
                 val baseRate = BaseRateCurrencyUIContent(
-                    currency = RateCurrencyUIContent(
-                        currencySymbol = cachedCurrentRate?.baseRate?.currency.orEmpty(),
-                        currencySymbolDetail = currencyDict[cachedCurrentRate?.baseRate?.currency].orEmpty(),
-                        price = 0.0
-                    ),
+                    currency = baseCurrency,
                     amount = amount
                 )
 
                 baseRate to rateList
-            }.collect {
+            }.collectLatest {
                 _uiState.emit(ListUIState.Success(it.first, it.second ?: emptyList()))
             }
+
         }
     }
 
@@ -82,10 +87,17 @@ class ListViewModel @Inject constructor(
                 currencyResult to latestRateResult
             }
                 .flowOn(Dispatchers.IO)
-                .collect { result ->
-                    result.second
+                .collect { (dictionary, response) ->
+                    response
                         .onSuccess {
-                            _currencySymbolDictionary.emit(result.first.getOrDefault(emptyMap()))
+                            val symbolDictionary = dictionary.getOrDefault(emptyMap())
+                            val baseRate = RateCurrencyUIContent(
+                                currencySymbolDetail = symbolDictionary[it.baseRate.currency].orEmpty(),
+                                currencySymbol = it.baseRate.currency,
+                                price = it.baseRate.rate.toBigDecimal()
+                            )
+                            _baseCurrency.emit(baseRate)
+                            _currencySymbolDictionary.emit(symbolDictionary)
                             _rate.emit(it)
                         }
                         .onFailure {
@@ -96,14 +108,23 @@ class ListViewModel @Inject constructor(
         }
     }
 
-    fun onAmountChange(text: String) {
+    private fun onAmountChange(text: String) {
         viewModelScope.launch {
-            _baseCurrencyAmount.emit(text.toDouble())
+            _baseCurrencyAmount.emit(text.toBigDecimal())
         }
     }
 
-    fun onCurrencyClick(rate: CurrencyRate) {
+    private fun onCurrencyClick(rate: RateCurrencyUIContent) {
+        viewModelScope.launch {
+            _baseCurrency.emit(rate)
+        }
+    }
 
+    fun onActionInvoked(action: ListUIAction) {
+        when (action) {
+            is ListUIAction.OnAmountChanged -> onAmountChange(action.amount)
+            is ListUIAction.onBaseCurrencyChanged -> onCurrencyClick(action.rate)
+        }
     }
 
     sealed class ListUIState {
@@ -113,5 +134,11 @@ class ListViewModel @Inject constructor(
         ) : ListUIState()
         object Loading : ListUIState()
         object Failed : ListUIState()
+    }
+
+    sealed class ListUIAction {
+
+        data class OnAmountChanged(val amount: String) : ListUIAction()
+        data class onBaseCurrencyChanged(val rate: RateCurrencyUIContent) : ListUIAction()
     }
 }

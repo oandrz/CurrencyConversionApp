@@ -9,7 +9,7 @@ class RateRemoteDataSource @Inject constructor(
     private val rateService: RateService
 ) {
 
-    fun getLatestRate(): Flow<LatestRateResponse> = flow {
-        emit(rateService.getLatestRate())
+    fun getLatestRate(baseCurrency: String?): Flow<LatestRateResponse> = flow {
+        emit(rateService.getLatestRate(baseCurrency))
     }
 }
