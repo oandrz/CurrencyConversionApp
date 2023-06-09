@@ -13,4 +13,8 @@ object DaoModule {
     @Provides
     @Singleton
     fun provideCurrencyDao(db: AppDatabase) = db.CurrencyDao()
+
+    @Provides
+    @Singleton
+    fun provideRateDao(db: AppDatabase) = db.RateDao()
 }

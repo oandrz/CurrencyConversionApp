@@ -6,7 +6,5 @@ import retrofit2.http.Query
 
 interface RateService {
     @GET("latest.json")
-    suspend fun getLatestRate(
-        @Query("base") baseCurrency: String?
-    ): LatestRateResponse
+    suspend fun getLatestRate(): LatestRateResponse
 }
