@@ -32,8 +32,6 @@ class SplashScreenActivity : ComponentActivity() {
         setContent {
             SplashScreen()
         }
-
-
     }
 }
 

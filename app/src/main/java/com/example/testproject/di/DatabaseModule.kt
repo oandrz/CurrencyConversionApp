@@ -2,7 +2,7 @@ package com.example.testproject.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.testproject.data.local.AppDatabase
+import com.example.testproject.data.local.db.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

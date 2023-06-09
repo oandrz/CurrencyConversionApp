@@ -1,7 +1,7 @@
 package com.example.testproject.data
 
-import com.example.testproject.data.local.CurrencyLocalDataSource
-import com.example.testproject.data.local.db.CacheCurrency
+import com.example.testproject.data.local.currency.CurrencyLocalDataSource
+import com.example.testproject.data.local.currency.CacheCurrency
 import com.example.testproject.data.network.currency.CurrencyRemoteDataSource
 import com.example.testproject.domain.model.CurrencyDetail
 import javax.inject.Inject

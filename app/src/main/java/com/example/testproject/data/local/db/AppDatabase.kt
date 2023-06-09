@@ -1,9 +1,8 @@
-package com.example.testproject.data.local
+package com.example.testproject.data.local.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.testproject.data.local.db.CacheCurrency
-import com.example.testproject.data.local.db.CurrencyDao
+import com.example.testproject.data.local.currency.CacheCurrency
 
 @Database(
     entities = [CacheCurrency::class],

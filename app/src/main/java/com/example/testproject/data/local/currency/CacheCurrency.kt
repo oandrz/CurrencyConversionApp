@@ -1,4 +1,4 @@
-package com.example.testproject.data.local.db
+package com.example.testproject.data.local.currency
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
