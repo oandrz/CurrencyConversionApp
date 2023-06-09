@@ -7,7 +7,7 @@ class CurrencyLocalDataSource @Inject constructor(
     private val currencyDao: CurrencyDao
 ) {
 
-    suspend fun getCurrencies(): List<CacheCurrency> = currencyDao.getAll()
+    suspend fun getCurrencies(): List<CacheCurrency> = currencyDao.getCurrencyDict()
 
-    suspend fun saveCurrencies(param: List<CacheCurrency>) = currencyDao.insertAll(param)
+    suspend fun saveCurrencies(cache: CacheCurrency) = currencyDao.insert(cache)
 }

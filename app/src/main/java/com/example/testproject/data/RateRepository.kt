@@ -6,6 +6,8 @@ import com.example.testproject.data.network.rate.LatestRateResponseTransformer
 import com.example.testproject.data.network.rate.RateRemoteDataSource
 import com.example.testproject.data.network.rate.response.LatestRateResponse
 import com.example.testproject.domain.model.LatestRate
+import com.example.testproject.ext.findDifferenceWithCurrentTimeInMinute
+import com.example.testproject.util.THIRTY_MINUTE
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -35,7 +37,7 @@ class RateRepositoryImpl @Inject constructor(
     }
 
     private suspend fun getDataFromCache(cachedRate: CachedRate): LatestRate {
-        val deltaMillisInMinute = (System.currentTimeMillis() - cachedRate.createdAtTimeStamp) / 60000
+        val deltaMillisInMinute = cachedRate.createdAtTimeStamp.findDifferenceWithCurrentTimeInMinute()
         val needRefresh = deltaMillisInMinute >= THIRTY_MINUTE
         return if (needRefresh) {
             refreshRate()
@@ -56,9 +58,5 @@ class RateRepositoryImpl @Inject constructor(
         )
 
         return rateResponseTransformer(response)
-    }
-
-    companion object {
-        private const val THIRTY_MINUTE = 30
     }
 }
