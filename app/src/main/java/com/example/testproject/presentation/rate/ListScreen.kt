@@ -102,6 +102,7 @@ fun SuccessContent(
                 onActionInvoked?.invoke(ListViewModel.ListUIAction.onBaseCurrencyChanged(it))
             }
         )
+        Spacer(modifier = Modifier.size(16.dp))
     }
 }
 
