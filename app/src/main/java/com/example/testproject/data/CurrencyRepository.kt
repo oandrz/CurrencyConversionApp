@@ -19,7 +19,7 @@ interface CurrencyRepository {
 
 class CurrencyRepositoryImpl @Inject constructor(
     private val localDataSource: CurrencyLocalDataSource,
-    private val remoteDataStore: CurrencyRemoteDataSource
+    private val remoteDataSource: CurrencyRemoteDataSource
 ) : CurrencyRepository {
 
     override fun getCurrencies(): Flow<List<CurrencyDetail>> = flow {
@@ -47,7 +47,7 @@ class CurrencyRepositoryImpl @Inject constructor(
     }
 
     private suspend fun refreshCurrency(): List<CurrencyDetail> {
-        val response = remoteDataStore.getCurrencies()
+        val response = remoteDataSource.getCurrencies()
         localDataSource.saveCurrencies(
             CacheCurrency(
                 currencyDictionary = Json.encodeToString(response),
