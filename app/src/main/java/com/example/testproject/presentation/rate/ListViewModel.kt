@@ -63,7 +63,11 @@ class ListViewModel @Inject constructor(
                         RateCurrencyUIContent(
                             currencySymbol = it.currency,
                             currencySymbolDetail = currencyDict[it.currency].orEmpty(),
-                            price = baseCurrency.currencySymbol.convertTo(amount, it.currency, cachedCurrentRate?.rates ?: emptyList())
+                            price = baseCurrency.currencySymbol.convertTo(
+                                amount,
+                                it.currency,
+                                currencySource = cachedCurrentRate?.rates ?: emptyList()
+                            )
                         )
                     }
                 val baseRate = BaseRateCurrencyUIContent(
@@ -75,7 +79,6 @@ class ListViewModel @Inject constructor(
             }.collectLatest {
                 _uiState.emit(ListUIState.Success(it.first, it.second ?: emptyList()))
             }
-
         }
     }
 

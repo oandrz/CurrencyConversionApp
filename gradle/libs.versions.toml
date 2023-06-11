@@ -24,6 +24,8 @@ coroutineTestVersion = "1.6.4"
 androidTestVersion = "1.1.5"
 espressoVersion = "3.5.1"
 junitComposeVersion = "1.4.0"
+jupiterVersion = "5.9.1"
+
 
 [libraries]
 androidx-ktx                        = { group = "androidx.core", name = "core-ktx", version.ref = "ktxVersion" }
@@ -51,13 +53,17 @@ kotlin-serialization-json           = { module = "org.jetbrains.kotlinx:kotlinx-
 retrofit                            = { module = "com.squareup.retrofit2:retrofit", version.ref ="retrofitVersion" }
 timber                              = { module = "com.jakewharton.timber:timber", version.ref ="timberVersion" }
 mockk                               = { module = "io.mockk:mockk", version.ref ="mockkVersion" }
-junit                               = { module = "junit:junit", version.ref ="junitVersion" }
-turbine                             = { module = "app.cash.turbine:turbine", version.ref ="turbineVersion" }
-coroutine-test                      = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref ="coroutineTestVersion" }
-espresso                            = { module = "androidx.test.espresso:espresso-core", version.ref ="espressoVersion" }
 okhttp-bom                          = { group = "com.squareup.okhttp3", name = "okhttp-bom", version.ref = "okhttpVersion" }
 okhttp-lib                          = { module = "com.squareup.okhttp3:okhttp" }
 okhttp-interceptor                  = { module = "com.squareup.okhttp3:logging-interceptor" }
+
+junit                               = { module = "junit:junit", version.ref ="junitVersion" }
+testJunit                           = { module = "org.junit.jupiter:junit-jupiter", version.ref = "jupiterVersion" }
+testKotlin                          = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlinVersion" }
+turbine                             = { module = "app.cash.turbine:turbine", version.ref ="turbineVersion" }
+coroutine-test                      = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref ="coroutineTestVersion" }
+espresso                            = { module = "androidx.test.espresso:espresso-core", version.ref ="espressoVersion" }
+
 
 [plugins]
 android-application                 = { id = "com.android.application", version.ref = "androidGradlePlugin" }

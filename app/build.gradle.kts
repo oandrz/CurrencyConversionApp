@@ -89,6 +89,8 @@ dependencies {
     kapt(libs.androidx.room.kapt)
 
     testImplementation(libs.junit)
+    testImplementation(libs.testJunit)
+    testImplementation(libs.testKotlin)
     testImplementation(libs.mockk)
     testImplementation(libs.turbine)
     testImplementation(libs.coroutine.test)
