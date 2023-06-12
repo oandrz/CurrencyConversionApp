@@ -26,6 +26,8 @@ espressoVersion = "3.5.1"
 junitComposeVersion = "1.4.0"
 jupiterVersion = "5.9.1"
 
+testAndroidCore = "1.5.0"
+testAndroidRunner = "1.5.2"
 
 [libraries]
 androidx-ktx                        = { group = "androidx.core", name = "core-ktx", version.ref = "ktxVersion" }
@@ -43,7 +45,6 @@ androidx-compose-ui-preview         = { module = "androidx.compose.ui:ui-tooling
 androidx-compose-ui-tooling         = { module = "androidx.compose.ui:ui-tooling" }
 androidx-compose-ui-test-manifest   = { module = "androidx.compose.ui:ui-test-manifest" }
 androidx-compose-material3          = { module = "androidx.compose.material3:material3" }
-androidx-compose-junit4             = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "junitComposeVersion" }
 
 dagger-hilt-compiler                = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hiltVersion" }
 dagger-hilt                         = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltVersion" }
@@ -64,6 +65,11 @@ turbine                             = { module = "app.cash.turbine:turbine", ver
 coroutine-test                      = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref ="coroutineTestVersion" }
 espresso                            = { module = "androidx.test.espresso:espresso-core", version.ref ="espressoVersion" }
 
+androidx-compose-junit4             = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "junitComposeVersion" }
+testAndroidCore                     = { module = "androidx.test:core-ktx", version.ref = "testAndroidCore" }
+testAndroidHilt                     = { module = "com.google.dagger:hilt-android-testing", version.ref = "hiltVersion" }
+testAndroidHiltCompiler             = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltVersion" }
+testAndroidRunner                   = { module = "androidx.test:runner", version.ref = "testAndroidRunner" }
 
 [plugins]
 android-application                 = { id = "com.android.application", version.ref = "androidGradlePlugin" }

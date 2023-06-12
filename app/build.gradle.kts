@@ -98,6 +98,12 @@ dependencies {
     androidTestImplementation(libs.espresso)
 
     androidTestImplementation(libs.androidx.compose.junit4)
+    androidTestImplementation(libs.testAndroidCore)
+    androidTestImplementation(libs.testAndroidHilt)
+    androidTestImplementation(libs.testAndroidRunner)
+
+    kaptAndroidTest(libs.testAndroidHiltCompiler)
+
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 }

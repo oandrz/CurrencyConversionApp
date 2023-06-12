@@ -34,6 +34,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -84,7 +85,9 @@ fun SuccessContent(
     state: ListUIState.Success,
     onActionInvoked: ((ListViewModel.ListUIAction) -> Unit)? = null,
 ) {
-    Column {
+    Column(
+        modifier = Modifier.testTag("success_content_list")
+    ) {
         CurrencyHeader(
             modifier = modifier
                 .fillMaxWidth()
@@ -109,7 +112,7 @@ fun SuccessContent(
 @Composable
 fun LoadingContent(modifier: Modifier = Modifier) {
     CircularProgressIndicator(
-        modifier = modifier
+        modifier = modifier.testTag("loading")
     )
 }
 
@@ -162,7 +165,7 @@ fun CurrencyHeader(
             var text by rememberSaveable { mutableStateOf(amount) }
             OutlinedTextField(
                 value = text,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().testTag("amount_field"),
                 onValueChange = {
                     text = it.numericFormatting(text)
                     onAmountChanged?.invoke(text)
