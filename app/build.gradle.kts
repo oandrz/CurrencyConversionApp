@@ -4,23 +4,18 @@ plugins {
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.kotlin.serialization)
+    id("com.example.buildlogic.common")
 }
 
 android {
     namespace = "com.example.nutmegproj"
-    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.example.nutmegproj"
-        minSdk = 24
-        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
     }
 
     buildTypes {
@@ -29,13 +24,7 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-    }
+
     buildFeatures {
         compose = true
     }
@@ -57,6 +46,8 @@ kapt {
 }
 
 dependencies {
+
+    implementation(project(":networking"))
 
     implementation(libs.dagger.hilt)
     implementation(platform("androidx.compose:compose-bom:2022.10.00"))

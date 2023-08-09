@@ -1,6 +1,6 @@
-package com.example.testproject.di
+package com.example.networking.di
 
-import com.example.testproject.data.network.interceptor.CredentialInterceptor
+import com.example.networking.interceptor.CredentialInterceptor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
