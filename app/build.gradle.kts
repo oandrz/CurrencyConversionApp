@@ -46,11 +46,15 @@ kapt {
 }
 
 dependencies {
+    implementation(libs.androidx.compose.ui.test)
+    debugImplementation(libs.androidx.compose.ui.testManifest)
 
     implementation(project(":networking"))
 
     implementation(libs.dagger.hilt)
     implementation(platform("androidx.compose:compose-bom:2022.10.00"))
+    implementation(libs.appcompat)
+    implementation(libs.material)
     androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
     kapt(libs.dagger.hilt.compiler)
     implementation(libs.androidx.ktx)
@@ -70,9 +74,8 @@ dependencies {
     implementation(libs.okhttp.interceptor)
 
     implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
-    implementation(libs.androidx.compose.ui.preview)
+    implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
 
     implementation(libs.androidx.room.runtime)
@@ -96,5 +99,4 @@ dependencies {
     kaptAndroidTest(libs.testAndroidHiltCompiler)
 
     debugImplementation(libs.androidx.compose.ui.tooling)
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
 }
