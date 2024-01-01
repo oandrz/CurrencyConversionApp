@@ -188,7 +188,6 @@ fun CurrencyHeader(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     cursorColor = MaterialTheme.colorScheme.surface,
-                    placeholderColor = MaterialTheme.colorScheme.surface,
                     unfocusedBorderColor = Color.Transparent,
                     focusedBorderColor = Color.Transparent
                 )

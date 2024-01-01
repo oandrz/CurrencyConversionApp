@@ -1,6 +1,5 @@
 package com.example.networking.di
 
-import com.example.networking.interceptor.CredentialInterceptor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -28,19 +27,20 @@ object NetworkingToolsModule {
     @Singleton
     @Provides
     fun providesOkHttpClient(
-        httpLoggingInterceptor: HttpLoggingInterceptor,
-        credentialInterceptor: CredentialInterceptor
+        httpLoggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient =
         OkHttpClient
             .Builder()
             .addInterceptor(httpLoggingInterceptor)
-            .addInterceptor(credentialInterceptor)
             .build()
 
     @Singleton
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-        .addConverterFactory(Json { ignoreUnknownKeys = true }.asConverterFactory("application/json".toMediaType()))
+        .addConverterFactory(
+            Json { ignoreUnknownKeys = true }
+                .asConverterFactory("application/json".toMediaType())
+        )
         .baseUrl(BASE_URL)
         .client(okHttpClient)
         .build()

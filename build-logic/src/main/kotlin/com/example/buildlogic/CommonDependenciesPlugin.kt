@@ -42,9 +42,6 @@ internal class CommonDependenciesPlugin : Plugin<Project> {
     }
 
     private fun Project.configureKotlinJvm() {
-//        with(pluginManager) {
-//            apply("org.jetbrains.kotlin.jvm")
-//        }
         extensions.configure<JavaPluginExtension> {
             sourceCompatibility = JavaVersion.VERSION_17
             targetCompatibility = JavaVersion.VERSION_17
