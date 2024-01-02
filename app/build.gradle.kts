@@ -3,10 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.dagger.hilt)
-    alias(libs.plugins.kotlin.serialization)
     id("com.example.buildlogic.common")
     id("com.example.buildlogic.hilt")
-    id("com.example.buildlogic.compose")
 }
 
 android {
@@ -27,15 +25,7 @@ android {
         }
     }
 
-    buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.6"
-    }
-
-    packagingOptions {
+    packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
@@ -58,13 +48,6 @@ dependencies {
     implementation(libs.dagger.hilt)
     kapt(libs.dagger.hilt.compiler)
 
-    implementation(libs.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.ktx)
-    implementation(libs.androidx.lifecycle.runtime)
-    implementation(libs.androidx.compose.activity)
-
-    implementation(libs.coil)
     implementation(libs.timber)
 
     testImplementation(libs.junit)
@@ -76,12 +59,9 @@ dependencies {
     androidTestImplementation(libs.androidx.test.ext)
     androidTestImplementation(libs.espresso)
 
-    androidTestImplementation(libs.androidx.compose.junit4)
     androidTestImplementation(libs.testAndroidCore)
     androidTestImplementation(libs.testAndroidHilt)
     androidTestImplementation(libs.testAndroidRunner)
 
     kaptAndroidTest(libs.testAndroidHiltCompiler)
-
-    debugImplementation(libs.androidx.compose.ui.tooling)
 }

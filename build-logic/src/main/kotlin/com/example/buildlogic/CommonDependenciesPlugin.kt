@@ -32,10 +32,10 @@ internal class CommonDependenciesPlugin : Plugin<Project> {
 
     private fun Project.configureAndroid() {
         extensions.configure<BaseExtension> {
-            compileSdkVersion(33)
+            compileSdkVersion(34)
             defaultConfig {
                 minSdk = 24
-                targetSdk = 33
+                targetSdk = 34
                 vectorDrawables.useSupportLibrary = true
                 compileOptions {
                     targetCompatibility = JavaVersion.VERSION_17

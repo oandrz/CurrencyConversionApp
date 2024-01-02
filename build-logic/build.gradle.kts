@@ -1,5 +1,5 @@
 plugins {
-    val kt = "1.8.20"
+    val kt = "1.9.21"
     kotlin("jvm").version(kt)
     id("java-gradle-plugin")
     `kotlin-dsl`
