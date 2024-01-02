@@ -18,3 +18,5 @@ rootProject.name = "TestProject"
 include(":app")
 include(":networking")
 include(":splash")
+include(":rate")
+include(":design")

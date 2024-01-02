@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import com.example.splash.R
+import com.dre.project.design.R as design
 
 @Composable
 fun SplashScreen() {
@@ -16,11 +16,11 @@ fun SplashScreen() {
         contentAlignment = Alignment.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_launcher_background),
+            painter = painterResource(id = design.drawable.ic_launcher_background),
             contentDescription = "background",
         )
         Image(
-            painter = painterResource(id = R.drawable.ic_launcher_foreground),
+            painter = painterResource(id = design.drawable.ic_launcher_foreground),
             contentDescription = "foreground",
         )
     }

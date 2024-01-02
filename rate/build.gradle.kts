@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.splash"
+    namespace = "com.example.rate"
 
     buildFeatures {
         compose = true
@@ -21,5 +21,4 @@ dependencies {
 
     implementation(libs.androidx.lifecycle.runtime)
     implementation(libs.androidx.viewmodel.lifecycle)
-
 }

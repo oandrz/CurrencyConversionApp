@@ -1,6 +1,5 @@
 package com.example.buildlogic
 
-import com.android.build.gradle.AppExtension
 import com.android.build.gradle.BaseExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
