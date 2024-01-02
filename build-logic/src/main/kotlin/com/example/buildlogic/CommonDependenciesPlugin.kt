@@ -13,7 +13,6 @@ internal class CommonDependenciesPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             configureKotlin()
-            configureKotlinJvm()
             configureAndroid()
         }
     }
@@ -27,7 +26,7 @@ internal class CommonDependenciesPlugin : Plugin<Project> {
     }
 
     private fun Project.configureAndroid() {
-        configure<BaseExtension> {
+        extensions.configure<BaseExtension> {
             compileSdkVersion(33)
             defaultConfig {
                 minSdk = 24
@@ -39,14 +38,5 @@ internal class CommonDependenciesPlugin : Plugin<Project> {
                 }
             }
         }
-    }
-
-    private fun Project.configureKotlinJvm() {
-        extensions.configure<JavaPluginExtension> {
-            sourceCompatibility = JavaVersion.VERSION_17
-            targetCompatibility = JavaVersion.VERSION_17
-        }
-
-        configureKotlin()
     }
 }

@@ -17,4 +17,4 @@ dependencyResolutionManagement {
 rootProject.name = "TestProject"
 include(":app")
 include(":networking")
-include(":todo-list")
+include(":splash")

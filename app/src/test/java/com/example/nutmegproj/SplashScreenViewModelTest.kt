@@ -3,7 +3,6 @@ package com.example.nutmegproj
 import app.cash.turbine.test
 import com.example.nutmegproj.util.MainDispatcherRule
 import com.example.testproject.domain.GetCurrenciesUseCase
-import com.example.testproject.presentation.splash.SplashScreenViewModel
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify

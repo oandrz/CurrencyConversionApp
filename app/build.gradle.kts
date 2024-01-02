@@ -39,6 +39,10 @@ android {
     packaging {
         resources.excludes.add("/META-INF/{AL2.0,LGPL2.1}")
     }
+
+    plugins.withType<com.android.build.gradle.BasePlugin> {
+        apply(plugin = "com.example.buildlogic.common")
+    }
 }
 
 kapt {
@@ -50,6 +54,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.testManifest)
 
     implementation(project(":networking"))
+    implementation(project(":splash"))
 
     implementation(libs.dagger.hilt)
     implementation(platform("androidx.compose:compose-bom:2022.10.00"))

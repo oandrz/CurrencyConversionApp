@@ -26,6 +26,10 @@ gradlePlugin {
             id = "com.example.buildlogic.hilt"
             implementationClass = "com.example.buildlogic.AndroidHiltConventionPlugin"
         }
+        register("compose") {
+            id = "com.example.buildlogic.compose"
+            implementationClass = "com.example.buildlogic.ComposeConventionPlugin"
+        }
     }
 }
 

@@ -1,4 +1,4 @@
-package com.example.testproject.presentation.splash
+package com.example.mylibrary
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import com.example.nutmegproj.R
+import com.example.splash.R
 
 @Composable
 fun SplashScreen() {
