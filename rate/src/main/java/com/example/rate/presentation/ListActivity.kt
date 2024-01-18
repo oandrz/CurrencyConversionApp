@@ -1,4 +1,4 @@
-package com.example.rate
+package com.example.rate.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -18,6 +18,7 @@ class ListActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        vm.init()
         setContent {
             MyTheme(dynamicColor = true) {
                 // A surface container using the 'background' color from the theme

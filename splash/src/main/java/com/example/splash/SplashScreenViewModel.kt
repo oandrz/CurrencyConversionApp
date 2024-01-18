@@ -1,8 +1,9 @@
-package com.example.mylibrary
+package com.example.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,6 +20,8 @@ class SplashScreenViewModel @Inject constructor(
     fun getCurrencies() {
         viewModelScope.launch {
             _uiState.emit(UIState.Loading)
+            delay(3000L)
+            _uiState.emit(UIState.Success)
         }
     }
 

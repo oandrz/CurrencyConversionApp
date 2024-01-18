@@ -1,4 +1,4 @@
-package com.example.rate
+package com.example.rate.presentation
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -10,7 +10,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -45,6 +48,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.design.MyTheme
+import com.example.rate.R
 import com.example.rate.model.RateCurrencyUIContent
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -80,27 +84,13 @@ fun SuccessContent(
     state: ListViewModel.ListUIState.Success,
     onActionInvoked: ((ListViewModel.ListUIAction) -> Unit)? = null,
 ) {
-    Column(
-        modifier = Modifier.testTag("success_content_list")
-    ) {
-        CurrencyHeader(
-            modifier = modifier
-                .fillMaxWidth()
-                .wrapContentHeight(),
-            currency = "S",
-            currencyDetail = "sd",
-            amount = 2.0.toString(),
-            onAmountChanged = {
-                onActionInvoked?.invoke(ListViewModel.ListUIAction.OnAmountChanged(it))
-            }
-        )
-//        RateList(
-//            rates = state.rates,
-//            onItemClicked = {
-//                onActionInvoked?.invoke(ListViewModel.ListUIAction.onBaseCurrencyChanged(it))
-//            }
-//        )
-        Spacer(modifier = Modifier.size(16.dp))
+    LazyColumn {
+        items(state.flightRates) {
+            Text(
+                text = it.city,
+                modifier = Modifier.wrapContentSize()
+            )
+        }
     }
 }
 
@@ -160,7 +150,9 @@ fun CurrencyHeader(
             var text by rememberSaveable { mutableStateOf(amount) }
             OutlinedTextField(
                 value = text,
-                modifier = Modifier.fillMaxWidth().testTag("amount_field"),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag("amount_field"),
                 onValueChange = {
                     text = "test"
                     onAmountChanged?.invoke(text)
@@ -225,7 +217,7 @@ fun RateItem(
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
             .clickable {
-               onItemClicked?.invoke(position)
+                onItemClicked?.invoke(position)
             }
         ,
         verticalAlignment = Alignment.CenterVertically,

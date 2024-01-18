@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.networking"
+    namespace = "com.dre.project.networking"
 }
 
 dependencies {
@@ -18,7 +18,6 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.kotlin.serialization.json)
     implementation(libs.kotlin.serialization.converter)
-    implementation(libs.timber)
 
     implementation(platform(libs.okhttp.bom))
     implementation(libs.okhttp.lib)

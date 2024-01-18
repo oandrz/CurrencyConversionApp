@@ -18,6 +18,7 @@ android {
 
 dependencies {
     implementation(project(":design"))
+    implementation(project(":rate"))
 
     implementation(libs.androidx.lifecycle.runtime)
     implementation(libs.androidx.viewmodel.lifecycle)

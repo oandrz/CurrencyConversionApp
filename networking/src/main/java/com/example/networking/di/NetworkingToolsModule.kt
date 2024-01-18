@@ -15,7 +15,7 @@ import retrofit2.Retrofit
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkingToolsModule {
-    private const val BASE_URL = "https://openexchangerates.org/api/"
+    private const val BASE_URL = "https://api.sheety.co/"
 
     @Singleton
     @Provides

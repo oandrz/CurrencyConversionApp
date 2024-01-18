@@ -1,4 +1,4 @@
-package com.example.mylibrary
+package com.example.splash
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box

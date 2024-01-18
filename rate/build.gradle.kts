@@ -17,8 +17,12 @@ android {
 }
 
 dependencies {
+    implementation(project(":networking"))
     implementation(project(":design"))
 
     implementation(libs.androidx.lifecycle.runtime)
     implementation(libs.androidx.viewmodel.lifecycle)
+    implementation(libs.retrofit)
+    implementation(libs.kotlin.serialization.json)
+    implementation(libs.kotlin.serialization.converter)
 }
